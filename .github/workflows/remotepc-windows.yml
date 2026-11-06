@@ -1,4 +1,5 @@
-# Windows x64 build of RemotePC By Pak Dosen, started by hand from the Actions tab.
+# Windows x64 build of RemotePC By Pak Dosen. Start it by hand from Actions >
+# Build RemotePC (Windows) > Run workflow; the exe and the MSI are the run's artifacts.
 # Adapted from the x86_64 path of `build-for-windows-flutter` in flutter-build.yml,
 # minus the code signing, update metadata and release steps that need RustDesk's own
 # secrets. Keep the tool versions below in step with that file when merging upstream.

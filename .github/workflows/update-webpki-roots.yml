@@ -24,6 +24,7 @@ concurrency:
 
 jobs:
   update:
+    if: github.repository == 'rustdesk/rustdesk'
     runs-on: ubuntu-latest
     permissions:
       contents: write

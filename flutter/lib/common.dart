@@ -3061,7 +3061,8 @@ int versionCmp(String v1, String v2) {
 }
 
 String getWindowName({WindowType? overrideType}) {
-  final name = bind.mainGetAppNameSync();
+  // The Windows runner and `core_main` find the main window by this title.
+  final name = appDisplayName;
   switch (overrideType ?? kWindowType) {
     case WindowType.Main:
       return name;
@@ -4230,6 +4231,15 @@ String get appName {
     _appName = bind.mainGetAppNameSync();
   }
   return _appName;
+}
+
+// User-facing name. `appName` stays the technical name used for paths and printers.
+String _appDisplayName = '';
+String get appDisplayName {
+  if (_appDisplayName.isEmpty) {
+    _appDisplayName = bind.mainGetAppDisplayNameSync();
+  }
+  return _appDisplayName;
 }
 
 String getConnectionText(bool secure, bool direct, String streamType) {

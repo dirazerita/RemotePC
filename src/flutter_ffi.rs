@@ -1150,6 +1150,10 @@ pub fn main_get_app_name_sync() -> SyncReturn<String> {
     SyncReturn(get_app_name())
 }
 
+pub fn main_get_app_display_name_sync() -> SyncReturn<String> {
+    SyncReturn(crate::get_app_display_name())
+}
+
 pub fn main_uri_prefix_sync() -> SyncReturn<String> {
     SyncReturn(crate::get_uri_prefix())
 }
@@ -3087,6 +3091,8 @@ pub mod server_side {
         custom_client_config: JString,
     ) {
         log::debug!("startServer from jvm");
+        // The service may start on boot, before the Flutter UI has called `initialize()`.
+        crate::init_app_name();
         let mut env = env;
         if let Ok(app_dir) = env.get_string(&app_dir) {
             *config::APP_DIR.write().unwrap() = app_dir.into();

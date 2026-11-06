@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=RemotePC By Pak Dosen
+NoDisplay=true
+MimeType=x-scheme-handler/remotepc;
+TryExec=remotepc
+Exec=remotepc %u
+Icon=remotepc
+Terminal=false
+Type=Application
+StartupNotify=false
+StartupWMClass=remotepc

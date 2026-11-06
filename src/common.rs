@@ -1208,9 +1208,27 @@ pub async fn do_check_software_update() -> hbb_common::ResultType<()> {
     result
 }
 
+/// Technical name of this rebranded build. Config/log dirs, IPC, the service, the URI
+/// scheme and the installed executable derive from it, and it is pasted unquoted into
+/// shell commands, so keep it alphanumeric.
+pub const CUSTOM_APP_NAME: &str = "RemotePC";
+/// Name shown to users: window titles, tray, installer entry and translations.
+pub const CUSTOM_APP_DISPLAY_NAME: &str = "RemotePC By Pak Dosen";
+
+/// Must run before anything reads `config::APP_NAME` (config paths, IPC).
+#[inline]
+pub fn init_app_name() {
+    *hbb_common::config::APP_NAME.write().unwrap() = CUSTOM_APP_NAME.to_owned();
+}
+
 #[inline]
 pub fn get_app_name() -> String {
     hbb_common::config::APP_NAME.read().unwrap().clone()
+}
+
+#[inline]
+pub fn get_app_display_name() -> String {
+    CUSTOM_APP_DISPLAY_NAME.to_owned()
 }
 
 #[inline]
@@ -2493,6 +2511,7 @@ pub fn rustdesk_interval(i: Interval) -> ThrottledInterval {
 }
 
 pub fn load_custom_client() {
+    init_app_name();
     #[cfg(debug_assertions)]
     if let Ok(data) = std::fs::read_to_string("./custom.txt") {
         read_custom_client(data.trim());
@@ -2591,6 +2610,7 @@ pub fn get_dst_align_rgba() -> usize {
 }
 
 pub fn read_custom_client(config: &str) {
+    init_app_name();
     let Ok(data) = decode64(config) else {
         log::error!("Failed to decode custom client config");
         return;
